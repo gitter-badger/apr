@@ -28,5 +28,12 @@
 *.x86_64
 *.hex
 
+# Visual Studio
+*.idb
+*.pdb
+
 # Debug files
 *.dSYM/
+
+# SConstruct Cache
+.sconsign.dblite 
