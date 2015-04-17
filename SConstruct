@@ -1,4 +1,5 @@
 
+CCFLAGS_CORE = ["/nologo", "/MD", "/W3", "/O2", "/DWIN32", "/DNDEBUG", "/D_CONSOLE", "/D_MBCS", "/FD", "/Iinclude", "/Icontrib/win32", "/DAPR_DECLARE_STATIC",]
 CCFLAGS = ["/nologo", "/MD", "/W3", "/Zi", "/O2", "/Oy-", "/Iinclude", "/Iinclude/arch", "/Iinclude/arch/win32", "/Iinclude/arch/unix", "/DNDEBUG", "/DAPR_DECLARE_STATIC", "/DWIN32", "/DWINNT", "/D_WINDOWS", "/FD", "/Icontrib/win32", ]
 
 
@@ -80,8 +81,10 @@ source = [
 
 ]
 
-gen_test_char = Program(source="src/tools/gen_test_char.c", target="target/gen_test_char", CCFLAGS=["/nologo", "/W3", "/O2", "/DWIN32", "/DNDEBUG", "/D_CONSOLE", "/D_MBCS", "/FD", "/Iinclude"])
+gen_test_char = Program(source="src/tools/gen_test_char.c", target="target/gen_test_char", CCFLAGS=CCFLAGS_CORE)
 
 libapr = StaticLibrary(source=source, target="target/apr", CCFLAGS=CCFLAGS)
 
-Default([gen_test_char, libapr])
+hello = Program(source=["hello.c"], target="hello", CCFLAGS=CCFLAGS_CORE, LIBS=[libapr, "ws2_32", "kernel32", "user32", "shell32", "advapi32"])
+
+Default([gen_test_char, libapr, hello])
